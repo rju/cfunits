@@ -185,6 +185,7 @@ _cv_free.argtypes = (_c_void_p,)
 _cv_free.restype = None
 
 _UT_ASCII = 0
+_UT_UTF8 = 2
 _UT_NAMES = 4
 _UT_DEFINITION = 8
 
@@ -2051,6 +2052,14 @@ class Units:
             return out
 
         return out.decode("utf-8")
+
+    @classmethod
+    def new_unit(cls, name):
+        base = _ut_new_base_unit(_ut_system)
+        _ut_map_name_to_unit(name, _UT_ASCII, base)
+        _ut_map_unit_to_name(base, name, _UT_ASCII)
+        return base
+
 
     @classmethod
     def conform(cls, x, from_units, to_units, inplace=False):
