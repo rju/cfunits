@@ -346,6 +346,46 @@ _months_or_years = ("month", "months", "year", "years", "yr")
 
 
 # --------------------------------------------------------------------
+# Function to decode Udunits status codes to text
+# --------------------------------------------------------------------
+def decode_status(status):
+    match status:
+        case 0:
+            return "success"
+        case 1:
+            return "bad argument" 
+        case 2:
+            return "already exists"
+        case 3:
+            return "no such unit"
+        case 4:
+            return "os error, see errno"
+        case 5:
+            return "units belong to different unit-systems"
+        case 6:
+            return "operation on the unit(s) is meaningless"
+        case 7:
+            return "unit-system doesn't have a unit named 'second'"
+        case 8:
+            return "error occurred while visiting a unit"
+        case 9:
+            return "unit can't be formatted in the desired manner"
+        case 10:
+            return "string unit representation contains syntax error"
+        case 11:
+            return "string unit representation contains unknown word"
+        case 12:
+            return "cannot open argument-specified unit database"
+        case 13:
+            return "cannot open environment-specified unit database"
+        case 14:
+            return "cannot open installed, default, unit database"
+        case 15:
+            return "error parsing unit specification"
+        case _:
+            return f"unknown error {status}!"
+
+# --------------------------------------------------------------------
 # Function to control Udunits error messages
 # --------------------------------------------------------------------
 def udunits_error_messages(flag):
@@ -2044,7 +2084,7 @@ class Units:
         if _ut_format(ut_unit, _string_buffer, _sizeof_buffer, opts) != -1:
             out = _string_buffer.value
         else:
-            raise ValueError(f"Can't format unit {self!r}")
+            raise ValueError(f"Cannot format unit {self!r} cause: {decode_status(_ut_get_status())}")
 
         if self.isreftime:
             out = str(out, "utf-8")  # needs converting from byte-string
@@ -2056,8 +2096,10 @@ class Units:
     @classmethod
     def new_unit(cls, name):
         base = _ut_new_base_unit(_ut_system)
-        _ut_map_name_to_unit(name, _UT_ASCII, base)
-        _ut_map_unit_to_name(base, name, _UT_ASCII)
+
+        assert 0 == _ut_map_unit_to_name(base, name.encode("utf-8"), _UT_UTF8)
+        assert 0 == _ut_map_name_to_unit(name.encode("utf-8"), _UT_UTF8, base)
+
         return base
 
 
