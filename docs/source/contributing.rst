@@ -115,3 +115,5 @@ ideas, code, and documentation to the cfunits library:
 * Jonathan Gregory
 * Lars Bärring
 * Sadie Bartholomew  
+* Reiner Jung
+
