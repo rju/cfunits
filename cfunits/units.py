@@ -2084,7 +2084,7 @@ class Units:
         if _ut_format(ut_unit, _string_buffer, _sizeof_buffer, opts) != -1:
             out = _string_buffer.value
         else:
-            raise ValueError(f"Cannot format unit {self!r} cause: {decode_status(_ut_get_status())}")
+            raise ValueError(f"Cannot format unit {self!r} cause: {_decode_status(_ut_get_status())}")
 
         if self.isreftime:
             out = str(out, "utf-8")  # needs converting from byte-string
