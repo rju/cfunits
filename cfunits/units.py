@@ -2095,6 +2095,21 @@ class Units:
 
     @classmethod
     def new_unit(cls, name):
+        """Creates a new custom unit in the unit system.
+        
+        Returns the new unit.
+
+        :Parameters:
+           name: str
+               name of the new unit.
+
+        Returns
+           the newly created unit.
+
+        **Examples**
+        >>> pebbles = Units.new_unit("pebbles")
+
+        """
         base = _ut_new_base_unit(_ut_system)
 
         assert 0 == _ut_map_unit_to_name(base, name.encode("utf-8"), _UT_UTF8)
