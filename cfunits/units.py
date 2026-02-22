@@ -348,7 +348,7 @@ _months_or_years = ("month", "months", "year", "years", "yr")
 # --------------------------------------------------------------------
 # Function to decode Udunits status codes to text
 # --------------------------------------------------------------------
-def decode_status(status):
+def _decode_status(status):
     match status:
         case 0:
             return "success"
