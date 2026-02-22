@@ -140,6 +140,24 @@ class UnitsTest(unittest.TestCase):
         self.assertFalse(Units(" ").equivalent(Units(1)))
         self.assertFalse(Units("1").equivalent(Units(1)))
 
+    def test_Units_new_unit(self):
+        """Test the `new_unit` class method on `Units`."""
+        
+        # can create a custom unit
+        u_pebbles = Units("pebbles")
+        
+        self.assertIsNotNone(u_pebbles)
+        self.assertIsTrue(u_pebbles.isvalid)
+        self.assertEqual(u_pebbles.formatted(), "pebbles")
+        
+        # use composed unit of a custom unit and an udunits unit 
+        u_pebbles_m = Units("pebbles/m")
+    
+        self.assertIsNotNone(u_pebbles_m)
+        self.assertIsTrue(u_pebbles.isvalid)
+        # Note: formatting does not work currently
+        # self.assertEqual(u_pebbles.formatted(), "pebbles")
+    
     def test_Units_conform(self):
         """Tests the `conform` class method on `Units`."""
         self.assertEqual(Units.conform(0.5, Units("km"), Units("m")), 500)

@@ -2093,10 +2093,11 @@ class Units:
 
         return out.decode("utf-8")
 
+
     @classmethod
     def new_unit(cls, name):
         """Creates a new custom unit in the unit system.
-        
+
         Returns the new unit.
 
         :Parameters:
